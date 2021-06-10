@@ -10,6 +10,9 @@ function App() {
   let posts = '강남 맛집';
   let [따봉, 따봉변경] = useState(0);
   let [modal, modal변경] = useState(false);
+  let [ num, chNum] = useState(0);
+  let [입력값, 입력값변경] = useState('');
+
 
   function 제목바꾸기() {
     let arr1 = [...글제목];
@@ -18,53 +21,52 @@ function App() {
     글제목변경( arr1 );
   }
 
+
+
     return (
     <div className="App">
       <div className="black-nav">
         React 개발 Blog
       </div>
       <button onClick={ 제목바꾸기 } >정렬</button>
-      
-      <div className="list">
-        <h3> {글제목[0]} <span onClick={ ()=>{따봉변경(따봉+1)} }>👍</span> {따봉} </h3>
-        <p>2021 06 03</p>
-        <hr/>
-      </div>
-      
-      <div className="list">
-        <h3> {글제목[1]} </h3>
-        <p>2021 06 03</p>
-        <hr/>
-      </div>
-      
-      <div className="list">
-        <h3 onClick={()=>{modal변경(true)}}> {글제목[2]} </h3>
-        <p>2021 06 03</p>
-        <hr/>
-      </div>
-
-
       {
-        // map
+      
+        글제목.map((a,i)=>{
+          return ( <div className="list" key={'postList'+i}>
+          <h3 onClick={()=>{chNum(i)}}> {글제목[i]}  <span onClick={ ()=>{따봉변경(따봉+1)} }>👍</span> {따봉}</h3>
+          <p>2021 06 03</p>
+          <hr/>
+        </div>
+          )
+        })
       }
 
+      <div className="publish">
+        <input onChange={(e)=>{          입력값변경(e.target.value)          }}/>
+        <button onClick={()=>{          
+          let change1 = [...글제목];
+          change1.unshift(입력값);
+          글제목변경(change1);
+          }}>
+        저장</button>
+      </div>
+      {입력값}
+      {/* <input onChange={ (e)=>{입력값변경(e.target.value) } }></input>
+      <p>{입력값}</p> */}
 
-
-
-
-      <button onClick={()=>{modal변경(!modal)}}>모달</button>
-      {
-        modal ? <Modal/> : null
+      <br></br>
+      <button onClick={()=>{modal변경(!modal)}}>modal</button>
+      {// 작명=전송할state
+        modal ? <Modal 글제목={글제목} num={num}/> : null
       }
-
     </div>
   );
 }
 
-function Modal() {
+function Modal(props) {
   return(
     <div className="modal">
-      <h2>제목</h2>
+      <h2>{props.글제목[props.num]}</h2>
       <p>날짜</p>
       <p>내용</p>
     </div>
