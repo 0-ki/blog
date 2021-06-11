@@ -13,15 +13,12 @@ function App() {
   let [ num, chNum] = useState(0);
   let [입력값, 입력값변경] = useState('');
 
-
   function 제목바꾸기() {
     let arr1 = [...글제목];
     // arr1[0] = '여자 코트 추천';
     arr1.sort();
     글제목변경( arr1 );
   }
-
-
 
     return (
     <div className="App">
@@ -53,6 +50,7 @@ function App() {
       {입력값}
       {/* <input onChange={ (e)=>{입력값변경(e.target.value) } }></input>
       <p>{입력값}</p> */}
+<Profile/>
 
       <br></br>
       <button onClick={()=>{modal변경(!modal)}}>modal</button>
@@ -72,5 +70,29 @@ function Modal(props) {
     </div>
   );
 }
+
+class Profile extends React.Component {
+  constructor(){
+    super();
+    this.state = {name : 'Kim'}
+  }
+
+  chName = ()=> {
+    this.setState({name:'Park'})
+  }
+
+  render(){
+    return (
+      <div>profile 임다
+
+        <h3>저는.. {this.state.name} ..입니다.</h3>
+        <button onClick={()=>{this.chName()}}>이름변경</button>
+      </div>
+    )
+  }
+
+}
+
+
 
 export default App;
